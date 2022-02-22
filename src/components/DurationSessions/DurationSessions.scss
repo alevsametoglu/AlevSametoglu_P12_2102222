@@ -1,0 +1,23 @@
+.duration-session {
+  background-color: red;
+  border: red;
+  color: white;
+  font-family: Roboto;
+  border-radius: 5px;
+  width: 100%;
+  height: 300px;
+
+  .durationSessions__header {
+    font-size: 15px;
+    text-align: left;
+    max-width: 150px;
+    line-height: 21px;
+  }
+  .duration-chart {
+    width: 100%;
+    .line-information {
+      color: white;
+      background-color: white;
+    }
+  }
+}
