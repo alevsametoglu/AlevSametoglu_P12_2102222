@@ -1,21 +1,32 @@
-import logo from "./logo.svg";
-import { Routes, Route, HashRouter as Router } from "react-router-dom";
-import "./App.css";
+import { Routes, Route, BrowserRouter as Router } from 'react-router-dom'
+import MainLayout from './Layout/MainLayout'
+import Dashboard from './pages/Dashboard'
 
-import MainLayout from "./Layout/MainLayout";
-import Dashbord from "./pages/Dashbord";
-import Information from "./components/Information/Information";
+import ErrorPage from './pages/ErrorPage'
+import UserList from './pages/UserList'
 
 function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<MainLayout />}>
-          <Route index element={<Dashbord />}></Route>
-        </Route>
-      </Routes>
-    </Router>
-  );
+    return (
+        <Router>
+            <Routes>
+                <Route path="/" index element={<UserList />} />
+                <Route
+                    path="user/:id"
+                    element={
+                        <MainLayout>
+                            <Dashboard />
+                        </MainLayout>
+                    }
+                />
+                <Route path="/yoga" element={<ErrorPage />} />
+                <Route path="/swimming" element={<ErrorPage />} />
+                <Route path="/biking" element={<ErrorPage />} />
+                <Route path="/bodyBuilding" element={<ErrorPage />} />
+
+                <Route path="*" element={<ErrorPage />} />
+            </Routes>
+        </Router>
+    )
 }
 
-export default App;
+export default App
