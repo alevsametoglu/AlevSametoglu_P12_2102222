@@ -1,91 +1,108 @@
-import React from "react";
-import "./Activity.scss";
+import React, { useEffect, useState } from 'react'
+import PropTypes from 'prop-types'
+import { ReactComponent as Oval } from '../../assets/images/Oval.svg'
+import './Activity.scss'
 import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
+    BarChart,
+    Bar,
+    XAxis,
+    YAxis,
+    CartesianGrid,
+    Tooltip,
+    ResponsiveContainer,
+} from 'recharts'
+import { API } from '../../Api'
 
-const data = [
-  {
-    name: "Page A",
-    uv: 4000,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: "Page B",
-    uv: 3000,
-    pv: 1398,
-    amt: 2210,
-  },
-  {
-    name: "Page C",
-    uv: 2000,
-    pv: 9800,
-    amt: 2290,
-  },
-  {
-    name: "Page D",
-    uv: 2780,
-    pv: 3908,
-    amt: 2000,
-  },
-  {
-    name: "Page E",
-    uv: 1890,
-    pv: 4800,
-    amt: 2181,
-  },
-  {
-    name: "Page F",
-    uv: 2390,
-    pv: 3800,
-    amt: 2500,
-  },
-  {
-    name: "Page G",
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
-  },
-];
+const CustomTooltip = ({ active, payload }) => {
+    return active && payload ? (
+        <div className="tool-tip">
+            <div className="poids">{`${payload[0].value} Kg`}</div>
+            <div className="calories">{`${payload[1].value} KCal`}</div>
+        </div>
+    ) : null
+}
 
-const Activity = () => {
-  return (
-    <div className="activity">
-      <BarChart
-        width={950}
-        height={320}
-        data={data}
-        margin={{
-          top: 5,
-          right: 30,
-          left: 20,
-          bottom: 5,
-        }}
-      >
-        <CartesianGrid horizontal="true" vertical="" />
-        <XAxis
-          dataKey="name"
-          dx={-10}
-          dy={-2}
-          axisLine={false}
-          tickLine={false}
-        />
-        <YAxis axisLine={false} tickLine={false} orientation="right" />
-        <Tooltip />
-        <Legend />
-        <Bar dataKey="pv" fill="#E60000" barSize={7} radius={[50, 50, 0, 0]} />
-        <Bar dataKey="uv" fill="#282D30" barSize={7} radius={[50, 50, 0, 0]} />
-      </BarChart>
-    </div>
-  );
-};
+const getDayNumber = (date) => {
+    const objetDate = new Date(date)
+    return objetDate.getDate()
+}
 
-export default Activity;
+export const Activity = (props) => {
+    const [data, setData] = useState([])
+
+    useEffect(() => {
+        if (props.userId)
+            API.getUserActivity(props.userId).then((response) => {
+                setData(response.sessions)
+            })
+    }, [props.userId])
+    console.log(data)
+
+    return (
+        <div className="activity">
+            <header className="card-header">
+                <h3>Activité quotidienne</h3>
+                <div className="card-indicator">
+                    <div className="card-infos">
+                        <Oval fill="#282D30" />
+                        <span> Poids (kg)</span>
+                    </div>
+                    <div className="card-infos">
+                        <Oval fill="#E60000" />
+                        <span> Calories brûlées (kCal)</span>
+                    </div>
+                </div>
+            </header>
+            <ResponsiveContainer aspect={4}>
+                <BarChart
+                    data={data}
+                    barGap={8}
+                    margin={{
+                        top: 5,
+                        right: 30,
+                        left: 20,
+                        bottom: 5,
+                    }}
+                >
+                    <CartesianGrid horizontal="true" vertical="" />
+                    <XAxis
+                        dataKey="day"
+                        dx={-10}
+                        dy={1}
+                        axisLine={false}
+                        tickLine={false}
+                        tickFormatter={getDayNumber}
+                    />
+                    <YAxis
+                        dataKey="calories"
+                        axisLine={false}
+                        tickLine={false}
+                        orientation="right"
+                        // domain={['dataMin - 20', 'dataMax + 20']}
+                    />
+
+                    <Tooltip content={CustomTooltip} />
+                    <Bar
+                        dataKey="kilogram"
+                        fill="#282D30"
+                        barSize={7}
+                        radius={[50, 50, 0, 0]}
+                    />
+
+                    <Bar
+                        dataKey="calories"
+                        fill="#E60000"
+                        barSize={7}
+                        radius={[50, 50, 0, 0]}
+                    />
+                </BarChart>
+            </ResponsiveContainer>
+        </div>
+    )
+}
+
+Activity.propTypes = {
+    userId: PropTypes.number,
+}
+
+export default Activity
