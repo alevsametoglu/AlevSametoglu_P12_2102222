@@ -1,7 +1,37 @@
-.radar-chart {
-  background-color: black;
-  font-family: Roboto;
-  font-size: 12px;
-  font-weight: bold;
-  border-radius: 6px;
+.information {
+    font-family: Roboto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+    border-radius: 5px;
+    background: #fbfbfb;
+    box-shadow: 0px 2px 4px 0px #00000005;
+    gap: 10px;
+    div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+
+        .info-value {
+            font-size: 20px;
+            font-weight: 700;
+            @media (max-width: 1200px) {
+                font-size: 12px;
+            }
+        }
+        .info-title {
+            color: #74798c;
+            font-size: 14px;
+            @media (max-width: 1200px) {
+                font-size: 10px;
+            }
+        }
+    }
+
+    @media (max-width: 1200px) {
+        padding: 10px;
+    }
 }
