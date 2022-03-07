@@ -1,0 +1,228 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> components/DurationSessions/DurationSessions.jsx</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+             
+                <a href="index.html">
+                    <h1 class="navbar-item">SportSee documentation</h1>
+                </a>
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+                <div class="search-wrapper">
+                    <input id="search" type="text" placeholder="Search docs..." class="input">
+                </div>
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Global</h3><ul><li><a href="global.html#Activity">Activity</a></li><li><a href="global.html#App">App</a></li><li><a href="global.html#Componentheader">Component header</a></li><li><a href="global.html#DurationSessions">DurationSessions</a></li><li><a href="global.html#forshowingactivitytypesasradarchart">for  showing activity types as radar chart</a></li><li><a href="global.html#forgetkind">for get kind</a></li><li><a href="global.html#forshowmainlayout">for show main layout</a></li><li><a href="global.html#forshowingdashboardtopage">for showing  dashboard  to page</a></li><li><a href="global.html#forshowingcards">for showing cards</a></li><li><a href="global.html#forshowingProgresspagge">for showing Progress pagge</a></li><li><a href="global.html#forshowingscoretopiechat">for showing score to pie chat</a></li><li><a href="global.html#forshowingsidebar">for showing side bar</a></li><li><a href="global.html#forshowinguserlist">for showing user list</a></li><li><a href="global.html#fortooltip">for tooltip</a></li><li><a href="global.html#getdata,weuseaxiostoconnectwiththebackendAPI.">get data, we use axios to connect
+with the backend API.</a></li><li><a href="global.html#getday">get day</a></li><li><a href="global.html#getdaynumber">get day number</a></li><li><a href="global.html#getuseractivity">get user activity</a></li><li><a href="global.html#getuseraveragesessions">get user average sessions</a></li><li><a href="global.html#getuserinfofromapi">get user info from api</a></li><li><a href="global.html#getuserperformance">get user performance</a></li><li><a href="global.html#Information">Information</a></li><li><a href="global.html#showingerrorpage">showing error page</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>components/DurationSessions/DurationSessions.jsx</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useEffect, useState } from 'react'
+import './DurationSessions.scss'
+import { API } from '../../Api'
+import PropTypes from 'prop-types'
+
+import { LineChart, Line, XAxis, Tooltip } from 'recharts'
+
+const days = {
+    1: 'L',
+    2: 'M',
+    3: 'M',
+    4: 'J',
+    5: 'V',
+    6: 'S',
+    7: 'D',
+}
+
+/**@function get day
+ *
+ * @param {number} indexDay
+ * @returns {string} (letter of day)
+ */
+const getDay = (indexDay) => {
+    return days[indexDay]
+}
+
+/**function  for showing duration session to line chart
+ *@component
+ * @param {number} userId
+ * @return  (&lt;DurationSessions/>)
+ */
+
+const DurationSessions = (props) => {
+    const [data, setData] = useState([])
+
+    useEffect(() => {
+        if (props.userId)
+            API.getUserAverageSessions(props.userId).then((response) => {
+                setData(response.sessions)
+                console.log(response)
+            })
+    }, [props.userId])
+    console.log(data)
+
+    return (
+        &lt;div className="duration-session">
+            &lt;header className="durationSessions__header">
+                &lt;h1>Durée moyenne des sessions&lt;/h1>
+            &lt;/header>
+            &lt;LineChart
+                className="duration-chart"
+                width={250}
+                height={150}
+                data={data}
+                margin={{
+                    top: 5,
+                    right: 0,
+                    left: 20,
+                    bottom: 0,
+                }}
+            >
+                &lt;XAxis
+                    dataKey="day"
+                    stroke="white"
+                    tickLine={false}
+                    dy={1}
+                    tickFormatter={getDay}
+                />
+
+                &lt;Tooltip
+                    content={(pointInfo) => {
+                        if (!pointInfo.active) return null
+                        const pointData = data.find(
+                            (x) => x.day === pointInfo.label
+                        )
+
+                        return (
+                            &lt;div className="tool">
+                                {pointData.sessionLength} min
+                            &lt;/div>
+                        )
+                    }}
+                />
+
+                &lt;Line
+                    className="line-information"
+                    type="monotone"
+                    dataKey="sessionLength"
+                    stroke="white"
+                    dot={false}
+                    activeDot={{ r: 7 }}
+                />
+            &lt;/LineChart>
+        &lt;/div>
+    )
+}
+DurationSessions.propTypes = {
+    userId: PropTypes.number,
+}
+export default DurationSessions
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.10</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+<script src="scripts/search.js"> </script>
+
+
+</body>
+</html>

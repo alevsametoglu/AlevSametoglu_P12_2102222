@@ -1,0 +1,252 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> components/Activity/Activity.jsx</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+             
+                <a href="index.html">
+                    <h1 class="navbar-item">SportSee documentation</h1>
+                </a>
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+                <div class="search-wrapper">
+                    <input id="search" type="text" placeholder="Search docs..." class="input">
+                </div>
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Global</h3><ul><li><a href="global.html#Activity">Activity</a></li><li><a href="global.html#App">App</a></li><li><a href="global.html#Componentheader">Component header</a></li><li><a href="global.html#DurationSessions">DurationSessions</a></li><li><a href="global.html#forshowingactivitytypesasradarchart">for  showing activity types as radar chart</a></li><li><a href="global.html#forgetkind">for get kind</a></li><li><a href="global.html#forshowmainlayout">for show main layout</a></li><li><a href="global.html#forshowingdashboardtopage">for showing  dashboard  to page</a></li><li><a href="global.html#forshowingcards">for showing cards</a></li><li><a href="global.html#forshowingProgresspagge">for showing Progress pagge</a></li><li><a href="global.html#forshowingscoretopiechat">for showing score to pie chat</a></li><li><a href="global.html#forshowingsidebar">for showing side bar</a></li><li><a href="global.html#forshowinguserlist">for showing user list</a></li><li><a href="global.html#fortooltip">for tooltip</a></li><li><a href="global.html#getdata,weuseaxiostoconnectwiththebackendAPI.">get data, we use axios to connect
+with the backend API.</a></li><li><a href="global.html#getday">get day</a></li><li><a href="global.html#getdaynumber">get day number</a></li><li><a href="global.html#getuseractivity">get user activity</a></li><li><a href="global.html#getuseraveragesessions">get user average sessions</a></li><li><a href="global.html#getuserinfofromapi">get user info from api</a></li><li><a href="global.html#getuserperformance">get user performance</a></li><li><a href="global.html#Information">Information</a></li><li><a href="global.html#showingerrorpage">showing error page</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>components/Activity/Activity.jsx</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useEffect, useState } from 'react'
+import PropTypes from 'prop-types'
+import { ReactComponent as Oval } from '../../assets/images/Oval.svg'
+import './Activity.scss'
+import {
+    BarChart,
+    Bar,
+    XAxis,
+    YAxis,
+    CartesianGrid,
+    Tooltip,
+    ResponsiveContainer,
+} from 'recharts'
+import { API } from '../../Api'
+
+/**@function for tooltip
+ *
+ * @param {*} param0
+ * @returns (custom tooltip)
+ */
+const CustomTooltip = ({ active, payload }) => {
+    return active &amp;&amp; payload ? (
+        &lt;div className="tool-tip">
+            &lt;div className="poids">{`${payload[0].value} Kg`}&lt;/div>
+            &lt;div className="calories">{`${payload[1].value} KCal`}&lt;/div>
+        &lt;/div>
+    ) : null
+}
+
+/**@function get day number
+ *
+ * @param {string} date
+ * @returns {number} of day
+ */
+const getDayNumber = (date) => {
+    const objetDate = new Date(date)
+    return objetDate.getDate()
+}
+
+/**function for showing  to bar chart activity
+ *@component
+ * @param {number} userId
+ * @returns (bar chart &lt;Activity/>)
+ */
+
+export const Activity = (props) => {
+    const [data, setData] = useState([])
+
+    useEffect(() => {
+        if (props.userId)
+            API.getUserActivity(props.userId).then((response) => {
+                setData(response.sessions)
+            })
+    }, [props.userId])
+    console.log(data)
+
+    return (
+        &lt;div className="activity">
+            &lt;header className="card-header">
+                &lt;h3>Activité quotidienne&lt;/h3>
+                &lt;div className="card-indicator">
+                    &lt;div className="card-infos">
+                        &lt;Oval fill="#282D30" />
+                        &lt;span> Poids (kg)&lt;/span>
+                    &lt;/div>
+                    &lt;div className="card-infos">
+                        &lt;Oval fill="#E60000" />
+                        &lt;span> Calories brûlées (kCal)&lt;/span>
+                    &lt;/div>
+                &lt;/div>
+            &lt;/header>
+            &lt;ResponsiveContainer aspect={4}>
+                &lt;BarChart
+                    data={data}
+                    barGap={8}
+                    margin={{
+                        top: 5,
+                        right: 30,
+                        left: 20,
+                        bottom: 5,
+                    }}
+                >
+                    &lt;CartesianGrid horizontal="true" vertical="" />
+                    &lt;XAxis
+                        dataKey="day"
+                        dx={-10}
+                        dy={1}
+                        axisLine={false}
+                        tickLine={false}
+                        tickFormatter={getDayNumber}
+                    />
+                    &lt;YAxis
+                        dataKey="calories"
+                        axisLine={false}
+                        tickLine={false}
+                        orientation="right"
+                        // domain={['dataMin - 20', 'dataMax + 20']}
+                    />
+
+                    &lt;Tooltip content={CustomTooltip} />
+                    &lt;Bar
+                        dataKey="kilogram"
+                        fill="#282D30"
+                        barSize={7}
+                        radius={[50, 50, 0, 0]}
+                    />
+
+                    &lt;Bar
+                        dataKey="calories"
+                        fill="#E60000"
+                        barSize={7}
+                        radius={[50, 50, 0, 0]}
+                    />
+                &lt;/BarChart>
+            &lt;/ResponsiveContainer>
+        &lt;/div>
+    )
+}
+
+Activity.propTypes = {
+    userId: PropTypes.number,
+}
+
+export default Activity
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.10</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+<script src="scripts/search.js"> </script>
+
+
+</body>
+</html>
