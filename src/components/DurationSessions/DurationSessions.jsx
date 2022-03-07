@@ -14,9 +14,21 @@ const days = {
     6: 'S',
     7: 'D',
 }
+
+/**@function get day
+ *
+ * @param {number} indexDay
+ * @returns {string} (letter of day)
+ */
 const getDay = (indexDay) => {
     return days[indexDay]
 }
+
+/**function  for showing duration session to line chart
+ *@component
+ * @param {number} userId
+ * @return  (<DurationSessions/>)
+ */
 
 const DurationSessions = (props) => {
     const [data, setData] = useState([])
@@ -78,7 +90,6 @@ const DurationSessions = (props) => {
                     dot={false}
                     activeDot={{ r: 7 }}
                 />
-                {/* <Line type="monotone" dataKey="uv" stroke="#82ca9d" /> */}
             </LineChart>
         </div>
     )

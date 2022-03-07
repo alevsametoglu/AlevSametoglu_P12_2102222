@@ -1,22 +1,34 @@
-import React from "react";
-import PropTypes from "prop-types";
-import "./Header.scss";
-import logo from "./SportSeeLogo.svg";
+import React from 'react'
+import './Header.scss'
+import logo from './SportSeeLogo.svg'
+import { Link } from 'react-router-dom'
 
-const Header = (props) => {
-  return (
-    <nav className="nav-bar">
-      <div>
-        <img src={logo} alt="" />
-      </div>
-      <div>Acceuil</div>
-      <div>Profil</div>
-      <div>Réglage</div>
-      <div>Communité</div>
-    </nav>
-  );
-};
+/**@function Component header
+ *@component
+ *
+ * @returns (<Header/>)
+ */
 
-Header.propTypes = {};
+const Header = () => {
+    return (
+        <div className="nav-bar">
+            <div>
+                <img src={logo} alt="" />
+            </div>
+            <Link className="nav-link" to="/">
+                Acceuil
+            </Link>
+            <Link className="nav-link" to="/profil">
+                Profil
+            </Link>
+            <Link className="nav-link" to="/reglage">
+                Réglage
+            </Link>
+            <Link className="nav-link" to="/communite">
+                Communité
+            </Link>
+        </div>
+    )
+}
 
-export default Header;
+export default Header

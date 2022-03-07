@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { PieChart, Pie, Cell, Label } from 'recharts'
+import { PieChart, Pie, Cell } from 'recharts'
 import { API } from '../../Api'
 import PropTypes from 'prop-types'
 
 import './Score.scss'
+
+/**@function  for showing score to pie chat
+ * @component
+ * @param {number } userId
+ * @returns( <Score/>)
+ */
 
 const Score = (props) => {
     const [data, setData] = useState([])

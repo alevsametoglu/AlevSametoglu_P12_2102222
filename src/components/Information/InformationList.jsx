@@ -6,6 +6,15 @@ import { ReactComponent as Lipide } from './icons/lipide.svg'
 import { ReactComponent as Glucide } from './icons/glucide.svg'
 import PropTypes from 'prop-types'
 
+/**@function for showing cards
+ * @component
+ * @param {number} calorie
+ * @param {number} protein
+ * @param {number} lipid
+ * @param {number} glucoside
+ * @returns (<InformationList/>)
+ */
+
 const InformationList = (props) => {
     console.log(props)
     return (

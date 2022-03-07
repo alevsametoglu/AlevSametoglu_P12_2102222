@@ -13,6 +13,11 @@ import {
 } from 'recharts'
 import { API } from '../../Api'
 
+/**@function for tooltip
+ *
+ * @param {*} param0
+ * @returns (custom tooltip)
+ */
 const CustomTooltip = ({ active, payload }) => {
     return active && payload ? (
         <div className="tool-tip">
@@ -22,10 +27,21 @@ const CustomTooltip = ({ active, payload }) => {
     ) : null
 }
 
+/**@function get day number
+ *
+ * @param {string} date
+ * @returns {number} of day
+ */
 const getDayNumber = (date) => {
     const objetDate = new Date(date)
     return objetDate.getDate()
 }
+
+/**function for showing  to bar chart activity
+ *@component
+ * @param {number} userId
+ * @returns (bar chart <Activity/>)
+ */
 
 export const Activity = (props) => {
     const [data, setData] = useState([])

@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './Performance.scss'
 import PropTypes from 'prop-types'
-import {
-    Radar,
-    RadarChart,
-    PolarGrid,
-    PolarAngleAxis,
-    PolarRadiusAxis,
-} from 'recharts'
+import { Radar, RadarChart, PolarGrid, PolarAngleAxis } from 'recharts'
 import { API } from '../../Api'
 
 const kind = {
@@ -18,10 +12,20 @@ const kind = {
     5: 'Energie',
     6: 'Cardio',
 }
+/**@function for get kind
+ *
+ * @param {number} indexKind
+ * @returns (index of kind)
+ */
 
 const getKind = (indexKind) => {
     return kind[indexKind]
 }
+/**@function for  showing activity types as radar chart
+ * @component
+ * @param {number} userId
+ * @returns (<Performance/>)
+ */
 const Performance = (props) => {
     const [data, setData] = useState([])
     useEffect(() => {

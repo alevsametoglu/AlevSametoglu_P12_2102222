@@ -1,6 +1,13 @@
 import React from 'react'
 import './Information.scss'
 import PropTypes from 'prop-types'
+/**function  card information
+ * @component
+ * @param {element}  icon svg
+ * @param {number} value
+ * @param {string} title
+ * @returns (<Information/>)
+ */
 
 const Information = (props) => {
     return (

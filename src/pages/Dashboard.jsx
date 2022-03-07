@@ -1,32 +1,39 @@
 import React, { useEffect, useState } from 'react'
-import PropTypes from 'prop-types'
 import Activity from '../components/Activity/Activity'
 import DurationSessions from '../components/DurationSessions/DurationSessions'
 import Performance from '../components/Performance/Performance'
-import Information from '../components/Information/Information'
 import './Dashboard.scss'
 import Score from '../components/Score/Score'
-import { useParams } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 import { API } from '../Api'
 import InformationList from '../components/Information/InformationList'
+/**@function for showing  dashboard  to page
+ *
+ * @returns (<Dashboard/>)
+ */
 
-const Dashbord = (props) => {
+const Dashboard = () => {
     const params = useParams()
+    const Navigate = useNavigate()
 
     const [userInfo, setUserInfo] = useState()
 
     useEffect(() => {
-        API.getUser(params.id).then((res) => {
-            console.log(res)
-            setUserInfo({
-                userId: res.id,
-                name: res.userInfos.firstName,
-                calorie: res.keyData.calorieCount,
-                protein: res.keyData.proteinCount,
-                glucoside: res.keyData.carbohydrateCount,
-                lipid: res.keyData.lipidCount,
+        API.getUser(params.id)
+            .then((res) => {
+                console.log({ res })
+                setUserInfo({
+                    userId: res.id,
+                    name: res.userInfos.firstName,
+                    calorie: res.keyData.calorieCount,
+                    protein: res.keyData.proteinCount,
+                    glucoside: res.keyData.carbohydrateCount,
+                    lipid: res.keyData.lipidCount,
+                })
             })
-        })
+            .catch(() => {
+                Navigate('/*')
+            })
     }, [params.id])
     console.log(userInfo)
     return (
@@ -42,7 +49,7 @@ const Dashbord = (props) => {
                     <Activity userId={userInfo?.userId} />
                     <div className="cards-info">
                         <DurationSessions userId={userInfo?.userId} />
-                        <Performance userId={userInfo?.userId} />
+                        <Performance userId={parseInt(userInfo?.userId)} />
                         <Score userId={userInfo?.userId} />
                     </div>
                 </article>
@@ -59,6 +66,4 @@ const Dashbord = (props) => {
     )
 }
 
-Dashbord.propTypes = {}
-
-export default Dashbord
+export default Dashboard

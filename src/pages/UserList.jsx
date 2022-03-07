@@ -4,7 +4,12 @@ import { ReactComponent as SportSeeLogo } from '../components/Header/SportSeeLog
 import './UserList.scss'
 import { Link } from 'react-router-dom'
 
-const UserList = (props) => {
+/**@function for showing user list
+ *
+ * @returns (<UserList/>)
+ */
+
+const UserList = () => {
     return (
         <div className="user-list">
             <SportSeeLogo className="logo-page" />
