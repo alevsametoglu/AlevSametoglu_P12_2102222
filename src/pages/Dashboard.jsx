@@ -32,7 +32,7 @@ const Dashboard = () => {
                 })
             })
             .catch(() => {
-                Navigate('/*')
+                Navigate('*')
             })
     }, [params.id])
     console.log(userInfo)
