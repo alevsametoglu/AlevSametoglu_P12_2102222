@@ -37,10 +37,8 @@ const DurationSessions = (props) => {
         if (props.userId)
             API.getUserAverageSessions(props.userId).then((response) => {
                 setData(response.sessions)
-                console.log(response)
             })
     }, [props.userId])
-    console.log(data)
 
     return (
         <div className="duration-session">

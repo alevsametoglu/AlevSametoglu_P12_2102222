@@ -52,7 +52,6 @@ export const Activity = (props) => {
                 setData(response.sessions)
             })
     }, [props.userId])
-    console.log(data)
 
     return (
         <div className="activity">

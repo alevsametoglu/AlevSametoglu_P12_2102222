@@ -21,7 +21,6 @@ const Dashboard = () => {
     useEffect(() => {
         API.getUser(params.id)
             .then((res) => {
-                console.log({ res })
                 setUserInfo({
                     userId: res.id,
                     name: res.userInfos.firstName,
@@ -35,7 +34,7 @@ const Dashboard = () => {
                 Navigate('*')
             })
     }, [params.id])
-    console.log(userInfo)
+
     return (
         <main className="main-container">
             <section className="profile">

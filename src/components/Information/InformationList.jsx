@@ -16,7 +16,6 @@ import PropTypes from 'prop-types'
  */
 
 const InformationList = (props) => {
-    console.log(props)
     return (
         <>
             <Information

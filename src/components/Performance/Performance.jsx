@@ -49,7 +49,7 @@ const Performance = (props) => {
             dy={5}
             stroke="#FFFFFF"
         >
-            <PolarGrid />
+            <PolarGrid radialLines={true} d={1} />
             <PolarAngleAxis
                 className="text-information"
                 stroke="white"
@@ -60,13 +60,7 @@ const Performance = (props) => {
                 tickFormatter={getKind}
             />
 
-            <Radar
-                name="Mike"
-                dataKey="value"
-                stroke="none"
-                fill="red"
-                fillOpacity={0.6}
-            />
+            <Radar dataKey="value" stroke="none" fill="red" fillOpacity={0.6} />
         </RadarChart>
     )
 }

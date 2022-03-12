@@ -16,11 +16,10 @@ const Score = (props) => {
     useEffect(() => {
         if (props.userId)
             API.getUser(props.userId).then((res) => {
-                console.log(res)
                 setData(res.score || res.todayScore)
             })
     }, [props.userId])
-    console.log(data)
+
     return (
         <div className="score">
             <header className="score-header">
