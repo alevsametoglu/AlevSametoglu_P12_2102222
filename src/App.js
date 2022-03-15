@@ -26,23 +26,6 @@ function App() {
                     <Route path="/profil" element={<ProgressPage />} />
                     <Route path="*" element={<ErrorPage />} />
                 </Route>
-                <Route path="/" index element={<UserList />} />
-                <Route
-                    path="/user/:id"
-                    element={
-                        <MainLayout>
-                            <Dashboard />
-                        </MainLayout>
-                    }
-                />
-                <Route
-                    path="/profil"
-                    element={
-                        <MainLayout>
-                            <ProgressPage />
-                        </MainLayout>
-                    }
-                />
             </Routes>
         </Router>
     )
