@@ -14,7 +14,7 @@ import InformationList from '../components/Information/InformationList'
 
 const Dashboard = () => {
     const params = useParams()
-    const Navigate = useNavigate()
+    const navigate = useNavigate()
 
     const [userInfo, setUserInfo] = useState()
 
@@ -31,7 +31,7 @@ const Dashboard = () => {
                 })
             })
             .catch(() => {
-                Navigate('*')
+                navigate('/error')
             })
     }, [params.id])
 

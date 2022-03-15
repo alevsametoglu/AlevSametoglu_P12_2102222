@@ -3,6 +3,7 @@ import './Performance.scss'
 import PropTypes from 'prop-types'
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis } from 'recharts'
 import { API } from '../../Api'
+import { useNavigate } from 'react-router'
 
 const kind = {
     1: 'Intensité',
@@ -27,15 +28,21 @@ const getKind = (indexKind) => {
  * @returns (<Performance/>)
  */
 const Performance = (props) => {
-    const [data, setData] = useState([])
+    const navigate = useNavigate()
+    const [data, setData] = useState()
     useEffect(() => {
         if (props.userId) {
-            API.getUserPerformance(props.userId).then((response) => {
-                setData(response.data)
-                console.log(response)
-            })
+            API.getUserPerformance(props.userId)
+                .then((response) => {
+                    setData(response.data)
+                })
+                .catch(() => {
+                    navigate('/error')
+                })
         }
     }, [props.userId])
+
+    if (!data) return <div>loading</div>
 
     return (
         <RadarChart

@@ -44,7 +44,7 @@ const getDayNumber = (date) => {
  */
 
 export const Activity = (props) => {
-    const [data, setData] = useState([])
+    const [data, setData] = useState()
 
     useEffect(() => {
         if (props.userId)
@@ -52,7 +52,7 @@ export const Activity = (props) => {
                 setData(response.sessions)
             })
     }, [props.userId])
-
+    if (!data) return <div>loading</div>
     return (
         <div className="activity">
             <header className="card-header">
